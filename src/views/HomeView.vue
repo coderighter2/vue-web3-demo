@@ -1,9 +1,23 @@
 <script setup>
-import TheWelcome from "@/components/TheWelcome.vue";
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  name: 'HomeView',
+  computed: {
+    ...mapGetters("contracts", ["nfts"])
+  },
+  methods: {
+    ...mapActions('contracts', ['fetchNfts'])
+  },
+  async created() {
+    await this.fetchNfts()
+    console.log('fetched nfts', this.nfts)
+  }
+}
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="greetings">
+    <h1 class="green">WiV Technology</h1>
+  </div>
 </template>
