@@ -8,23 +8,18 @@
         <th>Attributes</th>
       </tr>
     </thead>
-    <tbody
-      v-for="nft in nfts"
-      :key="nft.name"
-    >
-      <tr>
-        <td class="cost">{{ nft.name }}</td>
-        <td><img :src="nft.image" :alt="nft.name"/></td>
-        <td>{{ nft.description }}</td>
-        <td></td>
-      </tr>
-    </tbody>
+    <NFTTableItem v-for="(nft, index) in nfts" :key="index" :nft="nft" />
   </table>
 </template>
 
 <script>
+import NFTTableItem from './NFTTableItem.vue';
+
 export default {
   name: "NFTTable",
+  components: {
+    NFTTableItem
+  },
   props: {
     nfts: {
       type: Array,
