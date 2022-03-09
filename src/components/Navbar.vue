@@ -26,7 +26,7 @@ export default {
   methods: {
     ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"]),
     fectchNfts() {
-      this.$store.dispatch("contracts/fetchNfts");
+      this.$store.dispatch("contracts/fetchNfts", {startIndex: 0, endIndex: 9});
     }
   }
 }

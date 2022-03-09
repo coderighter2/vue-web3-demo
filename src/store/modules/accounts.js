@@ -5,7 +5,7 @@ const state = {
   activeAccount: null,
   web3: null,
   isConnected: false,
-  providerW3m: null, // this is "provider" from Web3Modal
+  providerW3m: null,
   web3Modal: null
 };
 
@@ -104,7 +104,6 @@ const mutations = {
     }
     state.providerW3m = null;
     await state.web3Modal.clearCachedProvider();
-
     window.location.href = '../'; // redirect to the Main page
   },
 
@@ -119,7 +118,6 @@ const mutations = {
 
   setIsConnected(state, isConnected) {
     state.isConnected = isConnected;
-    // add to persistent storage so that the user can be logged back in when revisiting website
     localStorage.setItem('isConnected', isConnected);
   },
 
