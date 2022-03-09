@@ -1,12 +1,19 @@
 <template>
-  <div class="greetings">
-    <h1 class="green">WiV Technology</h1>
-    <ul class="navbar-nav px-3">
-      <li class="nav-item text-nowrap">
-        <a class="nav-link" href="#" v-if="!isUserConnected" @click="connectWeb3Modal">Connect your wallet</a>
-        <a class="nav-link" href="#" v-if="isUserConnected" @click="disconnectWeb3Modal">Disconnect {{getActiveAccount.substring(0, 7)}}...</a>
-      </li>
-    </ul>
+  <div class="overflow-auto">
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="my-table"
+    ></b-pagination>
+    <p class="mt-3">Current Page: {{ currentPage }}</p>
+    <b-table
+      id="my-table"
+      :items="items"
+      :per-page="perPage"
+      :current-page="currentPage"
+      small
+    ></b-table>
   </div>
 </template>
 
@@ -15,20 +22,35 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'HomeView',
+  data() {
+    return {
+      perPage: 3,
+      currentPage: 1,
+      items: [
+        { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
+        { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
+        { id: 3, first_name: 'Barney', last_name: 'Rubble' },
+        { id: 4, first_name: 'Betty', last_name: 'Rubble' },
+        { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
+        { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
+        { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
+        { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
+        { id: 9, first_name: 'Pearl', last_name: 'Slaghoople' }
+      ]
+    }
+  },
   computed: {
     ...mapGetters("contracts", ["nfts", "contract"]),
-    ...mapGetters("accounts", ["getActiveAccount", "isUserConnected", "getWeb3Modal"])
+    ...mapGetters("accounts", ["getActiveAccount", "isUserConnected", "getWeb3Modal"]),
+    rows() {
+      return this.items.length
+    }
   },
   methods: {
     ...mapActions('contracts', ['fetchNfts', 'fetchContracts']),
     ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"])
   },
   async created() {
-    await this.$store.dispatch("accounts/initWeb3Modal");
-    await this.$store.dispatch("accounts/ethereumListener");
-    await this.fetchContracts()
-
-    console.log('fetched nfts', this.contract)
   }
 }
 </script>
