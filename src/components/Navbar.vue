@@ -1,9 +1,12 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="info" class="p-2">
     <b-navbar-brand href="#">WiV Technology</b-navbar-brand>
-    <b-navbar-nav right>
+    <b-navbar-nav>
       <a class="nav-link" href="#" v-if="!isUserConnected" @click="connectWeb3Modal">Connect your wallet</a>
       <a class="nav-link" href="#" v-if="isUserConnected" @click="disconnectWeb3Modal">Disconnect {{getActiveAccount.substring(0, 7)}}...</a>
+    </b-navbar-nav>
+    <b-navbar-nav>
+      <a class="nav-link" href="#" @click="fectchNfts">Fetch NFTs</a>
     </b-navbar-nav>
   </b-navbar>
 </template>
@@ -14,7 +17,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Navbar",
   computed: {
-    ...mapGetters("accounts", ["getActiveAccount", "isUserConnected", "getWeb3Modal"]),
+    ...mapGetters("accounts", ["getActiveAccount", "isUserConnected"]),
   },
   created() {
     this.$store.dispatch("accounts/initWeb3Modal");
@@ -22,6 +25,9 @@ export default {
   },
   methods: {
     ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"]),
+    fectchNfts() {
+      this.$store.dispatch("contracts/fetchNfts");
+    }
   }
 }
 </script>

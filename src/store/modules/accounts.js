@@ -3,9 +3,6 @@ import Web3 from "web3";
 
 const state = {
   activeAccount: null,
-  activeBalance: 0,
-  chainId: null,
-  chainName: null,
   web3: null,
   isConnected: false,
   providerW3m: null, // this is "provider" from Web3Modal
@@ -67,9 +64,7 @@ const actions = {
       commit("setIsConnected", true);
 
       commit("setActiveAccount", window.ethereum.selectedAddress);
-      commit("setChainData", window.ethereum.chainId);
       commit("setWeb3Provider", providerW3m);
-      actions.fetchActiveBalance({ commit });
     }
 
     commit("setWeb3ModalInstance", w3mObject);
@@ -80,9 +75,7 @@ const actions = {
     commit("setIsConnected", true);
 
     commit("setActiveAccount", window.ethereum.selectedAddress);
-    commit("setChainData", window.ethereum.chainId);
     commit("setWeb3Provider", providerW3m);
-    actions.fetchActiveBalance({ commit });
   },
 
   async disconnectWeb3Modal({ commit }) {
@@ -91,28 +84,13 @@ const actions = {
   },
 
   async ethereumListener({ commit }) {
-
     window.ethereum.on('accountsChanged', (accounts) => {
       if (state.isConnected) {
         commit("setActiveAccount", accounts[0]);
         commit("setWeb3Provider", state.providerW3m);
-        actions.fetchActiveBalance({ commit });
       }
     });
-
-    window.ethereum.on('chainChanged', (chainId) => {
-      commit("setChainData", chainId);
-      commit("setWeb3Provider", state.providerW3m);
-      actions.fetchActiveBalance({ commit });
-    });
-
-  },
-
-  async fetchActiveBalance({ commit }) {
-    let balance = await state.web3.eth.getBalance(state.activeAccount);
-    commit("setActiveBalance", balance);
   }
-  
 };
 
 const mutations = {
@@ -134,37 +112,6 @@ const mutations = {
     state.activeAccount = selectedAddress;
   },
 
-  setActiveBalance(state, balance) {
-    state.activeBalance = balance;
-  },
-
-  setChainData(state, chainId) {
-    state.chainId = chainId;
-
-    switch(chainId) {
-      case "0x1":
-        state.chainName = "Mainnet";
-        break;
-      case "0x2a":
-        state.chainName = "Kovan";
-        break;
-      case "0x3":
-        state.chainName = "Ropsten";
-        break;
-      case "0x4":
-        state.chainName = "Rinkeby";
-        break;
-      case "0x5":
-        state.chainName = "Goerli";
-        break;
-      case "0x539": // 1337 (often used on localhost)
-      case "0x1691": // 5777 (default in Ganache)
-      default:
-        state.chainName = "Localhost";
-        break;
-    }
-  },
-
   async setWeb3Provider(state, providerW3m) {
     state.providerW3m = providerW3m;
     state.web3 = new Web3(providerW3m);
@@ -179,7 +126,6 @@ const mutations = {
   setWeb3ModalInstance(state, w3mObject) {
     state.web3Modal = w3mObject;
   }
-
 };
 
 export default {
