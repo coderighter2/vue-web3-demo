@@ -46,6 +46,20 @@ const actions = {
     } catch (e) {
       console.error(e);
     }
+  },
+
+  async getLWINPrice(value) {
+    const rest = axios.create({
+      baseURL: 'https://sandbox-api.liv-ex.com/data/v2',
+      headers: {
+        'Content-Type': 'application/json',
+        'client_key': process.env.VUE_APP_LIVEX_CLIENT_KEY,
+        'client_secret': process.env.VUE_APP_LIVEX_CLIENT_SECRET
+      }
+    });
+    const res = await rest.get('priceData')
+    console.log('liv ex', value)
+    return res
   }
 }
 
