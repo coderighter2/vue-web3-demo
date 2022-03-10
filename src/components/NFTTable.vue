@@ -5,6 +5,7 @@
         <th>Name</th>
         <th>Image</th>
         <th>Description</th>
+        <th>Price</th>
         <th>Attributes</th>
       </tr>
     </thead>

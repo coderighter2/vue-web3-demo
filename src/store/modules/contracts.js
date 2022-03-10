@@ -47,19 +47,34 @@ const actions = {
       console.error(e);
     }
   },
-
-  async getLWINPrice(value) {
-    const rest = axios.create({
-      baseURL: 'https://sandbox-api.liv-ex.com/data/v2',
-      headers: {
-        'Content-Type': 'application/json',
-        'client_key': process.env.VUE_APP_LIVEX_CLIENT_KEY,
-        'client_secret': process.env.VUE_APP_LIVEX_CLIENT_SECRET
-      }
-    });
-    const res = await rest.get('priceData')
-    console.log('liv ex', value)
-    return res
+  async getLWINPrice(_, value) {
+    try {
+      const rest = axios.create({
+        baseURL: 'https://sandbox-api.liv-ex.com/data/v2',
+        headers: {
+          'CONTENT-TYPE': 'application/json',
+          'ACCEPT': 'application/json',
+          'CLIENT_KEY': process.env.VUE_APP_LIVEX_CLIENT_KEY,
+          'CLIENT_SECRET': process.env.VUE_APP_LIVEX_CLIENT_SECRET
+        }
+      });
+      const res = await rest.post('priceData', {
+        lwin: [value.toString()],
+        priceType: ['A'],
+        currency: 'usd'
+      })
+      const lwinDetail = res && res.data && res.data.lwinDetail
+      if (lwinDetail && lwinDetail.length > 0) {
+        const dataDetail = lwinDetail[0].dataDetail
+        if (dataDetail && dataDetail.length > 0 ) {
+          return dataDetail[0].priceData
+        }
+      } 
+      return ''  
+    } catch(e) {
+      console.error(e)
+      return ''
+    }
   }
 }
 

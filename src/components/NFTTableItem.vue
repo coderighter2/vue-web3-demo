@@ -4,6 +4,7 @@
       <td class="cost">{{ nft.name }}</td>
       <td><img :src="nft.image" :alt="nft.name"/></td>
       <td>{{ nft.description }}</td>
+      <td>${{ price }}</td>
       <td><button type="button" @click="onAttributes()">View Attributes</button>
       </td>
     </tr>
@@ -11,23 +12,23 @@
       <tr class="">
         <td>Trait Type</td>
         <td>Value</td>
-        <td>USD</td>
       </tr>
-      <tr class="" v-for="(attribute, index) in attributes" :key="index">
+      <tr class="" v-for="(attribute, index) in nft.attributes" :key="index">
         <td>{{attribute.trait_type}}</td>
         <td>{{attribute.value}}</td>
-        <td>{{attribute.trait_type == 'LWIN' ? attribute.usd: 'No Price Data'}}</td>
       </tr>
     </template>
   </tbody>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "NFTTableItem",
   data() {
     return {
-      view_attr: false
+      view_attr: false,
+      price: 0
     }
   },
   props: {
@@ -36,24 +37,16 @@ export default {
       required: true
     }
   },
-  computed: {
-    attributes() {
-      if (this.nft.attributes) {
-        return this.nft.attributes.map(attr => {
-          if (attr.trait_type && attr.trait_type === 'LWIN') {
-            //TODO -  get usd value from liv-ex api
-            attr.usd = 99999
-          }
-          return attr
-        })
-      }
-      return this.nft.attributes
-    }
-  },
+  computed: {},
   methods: {
+    ...mapActions('contracts', ['getLWINPrice']),
     onAttributes() {
       this.view_attr = !this.view_attr
     }
+  },
+  async created() {
+    const lwin = this.nft.attributes.find(attr => attr.trait_type === 'LWIN')
+    this.price = await this.getLWINPrice(lwin.value)
   }
 }
 </script>
