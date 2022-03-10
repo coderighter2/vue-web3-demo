@@ -5,9 +5,6 @@
       <a class="nav-link" href="#" v-if="!isUserConnected" @click="connectWeb3Modal">Connect your wallet</a>
       <a class="nav-link" href="#" v-if="isUserConnected" @click="disconnectWeb3Modal">Disconnect {{getActiveAccount.substring(0, 7)}}...</a>
     </b-navbar-nav>
-    <b-navbar-nav>
-      <a class="nav-link" href="#" @click="fectchNfts">Fetch NFTs</a>
-    </b-navbar-nav>
   </b-navbar>
 </template>
 
@@ -24,10 +21,7 @@ export default {
     this.$store.dispatch("accounts/ethereumListener");
   },
   methods: {
-    ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"]),
-    fectchNfts() {
-      this.$store.dispatch("contracts/fetchNfts", {startIndex: 0, endIndex: 9});
-    }
+    ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"])
   }
 }
 </script>

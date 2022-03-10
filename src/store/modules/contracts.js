@@ -20,21 +20,23 @@ const getters = {
 }
 
 const actions = {
-  async fetchContracts({ commit, rootState }) {
+  fetchContracts({ commit, rootState }) {
     let web3 = rootState.accounts.web3;
     let contract = new web3.eth.Contract(ContractsAbi, process.env.VUE_APP_CONTRACT_ADDRESS);
     commit("setContract", contract);
   },
-  async fetchNfts({ commit, rootState }, { startIndex, endIndex}) {
+
+  async fetchNftCount({ state, commit }) {
+    const tokenCount = await state.contract.methods.totalSupply().call()
+    commit("setTokenCount", tokenCount);
+  },
+
+  async fetchNfts({ commit }, { startIndex, endIndex}) {
     try {
-      let web3 = rootState.accounts.web3;
-      let contract = new web3.eth.Contract(ContractsAbi, process.env.VUE_APP_CONTRACT_ADDRESS);
-      const tokenCount = await contract.methods.totalSupply().call()
-      commit("setTokenCount", tokenCount);
       const nfts = []
       for (let i = startIndex; i < endIndex; i++) {
-        const tokenId = await contract.methods.tokenByIndex(i).call()
-        const tokenUri = await contract.methods.tokenURI(tokenId).call()
+        const tokenId = await state.contract.methods.tokenByIndex(i).call()
+        const tokenUri = await state.contract.methods.tokenURI(tokenId).call()
         const rest = axios.create({
           baseURL: tokenUri,
           headers: { 'Content-Type': 'application/json'}
