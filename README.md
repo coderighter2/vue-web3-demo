@@ -3,6 +3,13 @@
 
 ## Project setup
 
+Node Version: 14.18.0
+
+### Add ENV file
+add .env file in project root
+
+### install NPM
+
 ```
 npm install
 ```
