@@ -54,19 +54,7 @@ const actions = {
       cacheProvider: true, // optional
       providerOptions // required
     });
-
-    // This will get deprecated soon. Setting it to false removes a warning from the console.
     window.ethereum.autoRefreshOnNetworkChange = false;
-
-    // if the user is flagged as already connected, automatically connect back to Web3Modal
-    // if (localStorage.getItem('isConnected') === "true") {
-    //   let providerW3m = await w3mObject.connect();
-    //   commit("setIsConnected", true);
-
-    //   commit("setActiveAccount", window.ethereum.selectedAddress);
-    //   commit("setWeb3Provider", providerW3m);
-    // }
-
     commit("setWeb3ModalInstance", w3mObject);
   },
 
