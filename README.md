@@ -1,4 +1,5 @@
 # wiv-web3-demo
+Before testing the app, Please install MetaMask extension and add polygon network in your chrome browser.
 
 ## Project setup
 ```
