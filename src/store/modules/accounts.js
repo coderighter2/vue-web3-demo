@@ -106,7 +106,6 @@ const mutations = {
 
   setIsConnected(state, isConnected) {
     state.isConnected = isConnected;
-    localStorage.setItem('isConnected', isConnected);
   },
 
   setWeb3ModalInstance(state, w3mObject) {

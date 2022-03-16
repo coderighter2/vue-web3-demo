@@ -3,12 +3,15 @@ import App from './App.vue'
 import router from "./router";
 import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueLoading)
 
 Vue.config.productionTip = false
 
