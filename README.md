@@ -1,21 +1,11 @@
-# vue-web3-test
-
+# wiv-web3-demo
 
 ## Project setup
-
-Node Version: 14.18.0
-
-### Add ENV file
-add .env file in project root
-
-### install NPM
-
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-
 ```
 npm run serve
 ```
@@ -28,5 +18,7 @@ npm run build
 ### Lints and fixes files
 ```
 npm run lint
+```
 
-
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

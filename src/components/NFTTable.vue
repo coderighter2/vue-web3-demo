@@ -30,23 +30,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-table {
-  tr {
-    border: 0.64px solid #dbdbdb;
-    height: 48px;
-    th {
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 700;
-    }
-    td {
-      padding: 16px;
-      img {
-        width: 120px;
-      }
-    }
-  }
-
+<style scoped>
+tr {
+  border: 0.64px solid #dbdbdb;
+  height: 48px;
+}
+th {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
 }
 </style>

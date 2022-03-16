@@ -12,7 +12,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "Navbar",
+  name: "WivNavBar",
   computed: {
     ...mapGetters("accounts", ["getActiveAccount", "isUserConnected"]),
   },

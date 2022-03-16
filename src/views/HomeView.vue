@@ -44,7 +44,8 @@ export default {
   watch: {
     async isUserConnected(val) {
       if (val) {
-        this.fetchContracts()
+        console.log('start fetch contracts')
+        await this.fetchContracts()
         await this.fetchNftCount()
         await this.fetchNfts({startIndex: 0, endIndex: 9})
       }

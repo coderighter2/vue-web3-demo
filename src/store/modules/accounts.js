@@ -59,13 +59,13 @@ const actions = {
     window.ethereum.autoRefreshOnNetworkChange = false;
 
     // if the user is flagged as already connected, automatically connect back to Web3Modal
-    if (localStorage.getItem('isConnected') === "true") {
-      let providerW3m = await w3mObject.connect();
-      commit("setIsConnected", true);
+    // if (localStorage.getItem('isConnected') === "true") {
+    //   let providerW3m = await w3mObject.connect();
+    //   commit("setIsConnected", true);
 
-      commit("setActiveAccount", window.ethereum.selectedAddress);
-      commit("setWeb3Provider", providerW3m);
-    }
+    //   commit("setActiveAccount", window.ethereum.selectedAddress);
+    //   commit("setWeb3Provider", providerW3m);
+    // }
 
     commit("setWeb3ModalInstance", w3mObject);
   },
